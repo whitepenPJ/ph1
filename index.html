@@ -9,13 +9,21 @@
     body { background-color: #f1f5f9; color: #1e293b; margin: 0; padding: 20px; }
     .container { max-width: 900px; margin: 0 auto; }
 
-    /* Header & Summary Card */
+    /* Header & Actions */
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .header h1 { font-size: 1.5rem; margin: 0; color: #0f172a; }
-    .btn-refresh { background: #2563eb; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn-refresh { background: #2563eb; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; }
     .btn-refresh:hover { background: #1d4ed8; }
     .btn-refresh:disabled { opacity: 0.6; cursor: wait; }
 
+    .btn-icon { background: white; color: #475569; border: 1px solid #cbd5e1; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .btn-icon:hover { background: #f8fafc; color: #0f172a; border-color: #94a3b8; }
+    .btn-icon svg { width: 20px; height: 20px; transition: transform 0.3s ease; }
+    .btn-icon:hover svg { transform: rotate(45deg); }
+
+    /* Summary Card */
     .summary-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
     .ph-big { font-size: 3rem; font-weight: 800; color: #0f172a; line-height: 1; margin: 8px 0; }
     .sub-text { color: #64748b; font-size: 0.9rem; }
@@ -36,13 +44,58 @@
     .acid { background: #fee2e2; color: #b91c1c; }
     .neutral { background: #dcfce7; color: #15803d; }
     .alkaline { background: #e0e7ff; color: #1d4ed8; }
+
+    /* Modal Popup */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; border-radius: 14px; width: 100%; max-width: 460px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; animation: popIn 0.2s ease-out; }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+    .modal-header { padding: 18px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h2 { margin: 0; font-size: 1.15rem; color: #0f172a; }
+    .btn-close { background: none; border: none; font-size: 1.5rem; color: #64748b; cursor: pointer; line-height: 1; padding: 0 4px; }
+    .btn-close:hover { color: #0f172a; }
+
+    .modal-body { padding: 20px; max-height: 70vh; overflow-y: auto; }
+    .form-group { margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label.field-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; font-weight: 600; color: #334155; margin-bottom: 6px; }
+    .field-key-hint { font-size: 0.75rem; font-weight: 400; color: #94a3b8; font-family: monospace; }
+
+    .form-group input[type="number"],
+    .form-group input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; color: #0f172a; }
+    .form-group input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+    .checkbox-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; }
+    .checkbox-row label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.92rem; font-weight: 600; color: #334155; margin: 0; }
+    .checkbox-row input[type="checkbox"] { width: 17px; height: 17px; accent-color: #2563eb; cursor: pointer; }
+
+    .modal-status { font-size: 0.85rem; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; display: none; }
+    .modal-status.loading { display: block; background: #f1f5f9; color: #475569; }
+    .modal-status.success { display: block; background: #dcfce7; color: #15803d; }
+    .modal-status.error { display: block; background: #fee2e2; color: #b91c1c; }
+
+    .modal-footer { padding: 14px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 10px; }
+    .btn-secondary { background: white; border: 1px solid #cbd5e1; color: #334155; padding: 9px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+    .btn-secondary:hover { background: #f1f5f9; }
+    .btn-primary { background: #2563eb; border: none; color: white; padding: 9px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-primary:disabled { opacity: 0.6; cursor: wait; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <h1>💧 Water pH Monitoring</h1>
-      <button id="refresh" class="btn-refresh">↻ รีเฟรชข้อมูล</button>
+      <div class="header-actions">
+        <button id="refresh" class="btn-refresh">↻ refresh</button>
+        <button id="open-config" class="btn-icon" title="ตั้งค่าระบบ (Config)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div id="error" class="error"></div>
@@ -51,7 +104,7 @@
       <div>
         <div class="sub-text">ค่า pH ล่าสุด</div>
         <div id="latest-ph" class="ph-big">-</div>
-        <div class="sub-text">อัปเดตเมื่อ: <span id="latest-time">กำลังโหลด...</span></div>
+        <div class="sub-text">อัปเดตเมื่อ: <span id="latest-time">loading...</span></div>
       </div>
       <div id="latest-badge"><span class="badge neutral">รอข้อมูล</span></div>
     </div>
@@ -74,10 +127,41 @@
     </div>
   </div>
 
+  <!-- Config Modal Popup -->
+  <div id="config-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>⚙️ ตั้งค่าระบบ (Config)</h2>
+        <button id="close-config" class="btn-close">&times;</button>
+      </div>
+      <form id="config-form">
+        <div class="modal-body">
+          <div id="modal-status" class="modal-status"></div>
+          <!-- ฟิลด์ทั้งหมดจะถูกสร้างจาก config ที่ดึงมาจาก Apps Script -->
+          <div id="dynamic-config-fields"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel-config" class="btn-secondary">ยกเลิก</button>
+          <button type="submit" id="save-config" class="btn-primary">บันทึกการตั้งค่า</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
-    // Stable Apps Script web app URL (the googleusercontent "echo" link expires and redirects here)
-    const API_URL = "https://script.google.com/macros/s/AKfycbzlQFWL8iaMYqgoSj2n7gRbKq2ODfi2hxeIM5ksJK718_t88qfq4_S6L1GKYCj3ZYF3/exec?format=json";
+    const BASE_API_URL = "https://script.google.com/macros/s/AKfycbzlQFWL8iaMYqgoSj2n7gRbKq2ODfi2hxeIM5ksJK718_t88qfq4_S6L1GKYCj3ZYF3/exec";
+    const API_URL = `${BASE_API_URL}?format=json`;
     const MAX_ROWS = 50;
+
+    let currentConfig = {};
+
+    // สามารถกำหนดชื่อภาษาไทยให้บาง field ได้ตามต้องการ (ถ้าไม่ระบุ จะแปลงชื่อ key อัตโนมัติ)
+    const FIELD_LABELS = {
+      phMin: "ค่า pH ต่ำสุด",
+      phMax: "ค่า pH สูงสุด",
+      interval: "ช่วงเวลาส่งข้อมูล (วินาที)",
+      notify: "เปิดการแจ้งเตือน"
+    };
 
     const dateFormatter = new Intl.DateTimeFormat("en-GB", {
       timeZone: "Asia/Bangkok",
@@ -89,22 +173,32 @@
       if (!value) return "-";
       const d = new Date(value);
       if (isNaN(d)) return String(value);
-      return dateFormatter.format(d).replace(",", ""); // dd/MM/yyyy HH:mm:ss
+      return dateFormatter.format(d).replace(",", "");
     }
 
     function escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     }
 
+    function formatKeyToLabel(key) {
+      if (FIELD_LABELS[key]) return FIELD_LABELS[key];
+      return key
+        .replace(/([A-Z])/g, " $1")
+        .replace(/[_-]+/g, " ")
+        .replace(/^./, str => str.toUpperCase())
+        .trim();
+    }
+
     function getPhBadge(ph) {
+      const phMin = Number(currentConfig.phMin ?? 6.5);
+      const phMax = Number(currentConfig.phMax ?? 8.5);
       if (isNaN(ph)) return `<span class="badge neutral">ไม่มีข้อมูล</span>`;
-      if (ph < 6.5)  return `<span class="badge acid">กรด (Acidic)</span>`;
-      if (ph > 8.5)  return `<span class="badge alkaline">ด่าง (Alkaline)</span>`;
+      if (ph < phMin) return `<span class="badge acid">กรด (Acidic)</span>`;
+      if (ph > phMax) return `<span class="badge alkaline">ด่าง (Alkaline)</span>`;
       return `<span class="badge neutral">ปกติ (Neutral)</span>`;
     }
 
     function render(data) {
-      // Newest first, latest 50 records
       const records = (data.data || [])
         .slice()
         .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
@@ -149,6 +243,9 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (data.status !== "success") throw new Error(data.message || "API returned an error");
+        if (data.config && typeof data.config === "object") {
+          currentConfig = data.config;
+        }
         render(data);
       } catch (err) {
         errorBox.textContent = `โหลดข้อมูลไม่สำเร็จ: ${err.message}`;
@@ -158,14 +255,186 @@
       }
     }
 
-    document.getElementById("refresh").addEventListener("click", load);
-    // load();
+    /* ================= DYNAMIC CONFIG MODAL ================= */
+    const modal = document.getElementById("config-modal");
+    const modalStatus = document.getElementById("modal-status");
+    const fieldsContainer = document.getElementById("dynamic-config-fields");
+    const saveBtn = document.getElementById("save-config");
 
-    setInterval(() => {
-      // Auto-refresh every 5 minutes
-      load();
-      console.log("Refreshed data automatically.");
-    }, 5000);
+    function setModalStatus(type, message) {
+      modalStatus.className = `modal-status ${type}`;
+      modalStatus.textContent = message;
+    }
+
+    function renderConfigFields(configObj) {
+      const keys = Object.keys(configObj || {});
+      if (keys.length === 0) {
+        fieldsContainer.innerHTML = `<div class="empty">ไม่พบ field config จาก Apps Script</div>`;
+        return;
+      }
+
+      fieldsContainer.innerHTML = keys.map((key) => {
+        const val = configObj[key];
+        const labelText = escapeHtml(formatKeyToLabel(key));
+        const safeKey = escapeHtml(key);
+
+        // กรณีเป็น Boolean -> Checkbox
+        if (typeof val === "boolean") {
+          return `
+            <div class="form-group">
+              <div class="checkbox-row">
+                <label>
+                  <input type="checkbox" data-key="${safeKey}" data-type="boolean" ${val ? "checked" : ""}>
+                  <span>${labelText}</span>
+                </label>
+                <span class="field-key-hint">${safeKey}</span>
+              </div>
+            </div>
+          `;
+        }
+
+        // กรณีเป็น Number -> Number Input
+        if (typeof val === "number") {
+          return `
+            <div class="form-group">
+              <label class="field-label">
+                <span>${labelText}</span>
+                <span class="field-key-hint">${safeKey}</span>
+              </label>
+              <input type="number" step="any" data-key="${safeKey}" data-type="number" value="${escapeHtml(val)}" required>
+            </div>
+          `;
+        }
+
+        // กรณีเป็น Object หรือ Array -> แปลงเป็น JSON string เพื่อแก้ไขได้
+        if (typeof val === "object" && val !== null) {
+          return `
+            <div class="form-group">
+              <label class="field-label">
+                <span>${labelText}</span>
+                <span class="field-key-hint">${safeKey} (JSON)</span>
+              </label>
+              <input type="text" data-key="${safeKey}" data-type="json" value="${escapeHtml(JSON.stringify(val))}">
+            </div>
+          `;
+        }
+
+        // กรณีเป็น String หรืออื่นๆ -> Text Input
+        return `
+          <div class="form-group">
+            <label class="field-label">
+              <span>${labelText}</span>
+              <span class="field-key-hint">${safeKey}</span>
+            </label>
+            <input type="text" data-key="${safeKey}" data-type="string" value="${escapeHtml(val ?? "")}">
+          </div>
+        `;
+      }).join("");
+    }
+
+    function collectConfigFromForm() {
+      const inputs = fieldsContainer.querySelectorAll("[data-key]");
+      const updated = {};
+
+      inputs.forEach((el) => {
+        const key = el.getAttribute("data-key");
+        const type = el.getAttribute("data-type");
+
+        if (type === "boolean") {
+          updated[key] = el.checked;
+        } else if (type === "number") {
+          updated[key] = el.value === "" ? null : Number(el.value);
+        } else if (type === "json") {
+          try {
+            updated[key] = JSON.parse(el.value);
+          } catch {
+            updated[key] = el.value;
+          }
+        } else {
+          updated[key] = el.value;
+        }
+      });
+
+      return updated;
+    }
+
+    async function openConfigModal() {
+      modal.classList.add("active");
+      fieldsContainer.innerHTML = "";
+      setModalStatus("loading", "กำลังดึง field config จาก Apps Script...");
+      saveBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${BASE_API_URL}?action=getConfig`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const result = await res.json();
+
+        if (result.status === "success" && result.config) {
+          currentConfig = result.config;
+          modalStatus.style.display = "none";
+          renderConfigFields(currentConfig);
+        } else {
+          throw new Error(result.message || "ไม่พบข้อมูล config ใน response");
+        }
+      } catch (err) {
+        setModalStatus("error", `ดึง config ไม่สำเร็จ: ${err.message}`);
+      } finally {
+        saveBtn.disabled = false;
+      }
+    }
+
+    function closeConfigModal() {
+      modal.classList.remove("active");
+      modalStatus.style.display = "none";
+    }
+
+    async function saveConfig(e) {
+      e.preventDefault();
+      saveBtn.disabled = true;
+      setModalStatus("loading", "กำลังบันทึก config ไปยัง Apps Script...");
+
+      const payload = {
+        action: "saveConfig",
+        config: collectConfigFromForm()
+      };
+
+      try {
+        const res = await fetch(BASE_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const result = await res.json();
+
+        if (result.status === "success") {
+          currentConfig = result.config || payload.config;
+          setModalStatus("success", "บันทึก config เรียบร้อยแล้ว!");
+          load();
+          setTimeout(closeConfigModal, 900);
+        } else {
+          throw new Error(result.message || "บันทึกไม่สำเร็จ");
+        }
+      } catch (err) {
+        setModalStatus("error", `บันทึกไม่สำเร็จ: ${err.message}`);
+      } finally {
+        saveBtn.disabled = false;
+      }
+    }
+
+    document.getElementById("refresh").addEventListener("click", load);
+    document.getElementById("open-config").addEventListener("click", openConfigModal);
+    document.getElementById("close-config").addEventListener("click", closeConfigModal);
+    document.getElementById("cancel-config").addEventListener("click", closeConfigModal);
+    document.getElementById("config-form").addEventListener("submit", saveConfig);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeConfigModal();
+    });
+
+    load();
+    setInterval(load, 30000);
   </script>
 </body>
 </html>
